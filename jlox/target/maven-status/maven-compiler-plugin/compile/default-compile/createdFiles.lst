@@ -8,6 +8,8 @@ com/craftinginterpreters/lox/Token.class
 com/craftinginterpreters/lox/Expr$Unary.class
 com/craftinginterpreters/lox/TokenType.class
 com/craftinginterpreters/lox/Lox.class
+com/craftinginterpreters/lox/Parser$1.class
 com/craftinginterpreters/tool/GenerateAst.class
+com/craftinginterpreters/lox/Parser$ParseError.class
 com/craftinginterpreters/lox/Expr.class
 com/craftinginterpreters/lox/AstPrinter.class
