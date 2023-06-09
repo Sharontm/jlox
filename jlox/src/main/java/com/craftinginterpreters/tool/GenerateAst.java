@@ -16,7 +16,14 @@ import java.util.List;
 
 
 public class GenerateAst {
+
+    private static String outputDir;
     public static void main(String[] args) throws IOException {
+        defineAst(outputDir, "Stmt", Arrays.asList(
+        "Expression : Expr expression",
+        "Print      : Expr expression",
+        "Var        : Token name, Expr initializer"
+        ));
         if (args.length != 1) {
             System.err.println("Usage: generate_ast <output directory>");
             System.exit(64);
@@ -26,7 +33,8 @@ public class GenerateAst {
                 "Binary   : Expr left, Token operator, Expr right",
                 "Grouping : Expr expression",
                 "Literal  : Object value",
-                "Unary    : Token operator, Expr right"
+                "Unary    : Token operator, Expr right",
+                "Variable : Token name"
         ));
     }
 

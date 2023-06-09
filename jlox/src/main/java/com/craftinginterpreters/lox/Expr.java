@@ -11,6 +11,19 @@ package com.craftinginterpreters.lox;
 
 abstract class Expr {
 
+    static class Variable extends Expr {
+
+        Token name;
+
+        public Variable(Token previous) {
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+    }
+
     interface Visitor<R> {
        R visitBinaryExpr(Binary expr);
        R visitGroupingExpr(Grouping expr);
@@ -49,6 +62,7 @@ abstract class Expr {
     }
 
     static class Literal extends Expr {
+        final Object value;
         Literal (Object value) {
             this.value = value;
         }
@@ -61,8 +75,6 @@ abstract class Expr {
         <R> R accept(Visitor<R> visitor) {
             return visitor.visitLiteralExpr(this);
         }
-
-        final Object value;
     }
 
     static class Unary extends Expr {
