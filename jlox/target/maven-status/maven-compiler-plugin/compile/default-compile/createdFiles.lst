@@ -12,9 +12,12 @@ com/craftinginterpreters/lox/Stmt$While.class
 com/craftinginterpreters/lox/Stmt.class
 com/craftinginterpreters/lox/Stmt$Class.class
 com/craftinginterpreters/lox/TokenType.class
+com/craftinginterpreters/lox/Expr$Assign.class
 com/craftinginterpreters/tool/GenerateAst.class
+com/craftinginterpreters/lox/Environment.class
 com/craftinginterpreters/lox/Expr.class
 com/craftinginterpreters/lox/AstPrinter.class
+com/craftinginterpreters/lox/Expr$Variable.class
 com/craftinginterpreters/lox/Stmt$Expression.class
 com/craftinginterpreters/lox/Expr$Literal.class
 com/craftinginterpreters/lox/Stmt$Return.class

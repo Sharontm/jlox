@@ -90,6 +90,25 @@ class Interpreter implements Expr.Visitor<Object>,
     private void execute(Stmt stmt) {
         stmt.accept(this);
     }
+    void executeBlock(List<Stmt> statements,
+                    Environment environment) {
+    Environment previous = this.environment;
+    try {
+      this.environment = environment;
+
+      for (Stmt statement : statements) {
+        execute(statement);
+      }
+    } 
+      finally {
+            this.environment = previous;
+      }
+    }
+    @Override
+    public Void visitBlockStmt(Stmt.Block stmt) {
+        executeBlock(stmt.statements, new Environment(environment));
+    return null;
+  }
 
     @Override
     public Void visitExpressionStmt(Stmt.Expression stmt) {
@@ -102,6 +121,7 @@ class Interpreter implements Expr.Visitor<Object>,
         System.out.println(stringify(value));
         return null;
     }
+
     @Override
     public Void visitVarStmt(Stmt.Var stmt) {
         Object value = null;
@@ -111,6 +131,12 @@ class Interpreter implements Expr.Visitor<Object>,
 
         environment.define(stmt.name.lexeme, value);
         return null;
+    }
+    @Override
+    public Object visitAssignExpr(Expr.Assign expr) {
+        Object value = evaluate(expr.value);
+        environment.assign(expr.name, value);
+        return value;
     }
     @Override
     public Object visitBinaryExpr(Expr.Binary expr) {
@@ -156,11 +182,6 @@ class Interpreter implements Expr.Visitor<Object>,
 
         // Unreachable.
         return null;
-    }
-
-    @Override
-    public Void visitBlockStmt(Stmt.Block stmt) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override

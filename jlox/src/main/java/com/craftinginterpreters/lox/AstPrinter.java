@@ -58,4 +58,9 @@ class AstPrinter implements Expr.Visitor<String>
 
     System.out.println(new AstPrinter().print(expression));
   }
+
+    @Override
+    public <R> R visitAssignExpr(Expr.Assign aThis) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
