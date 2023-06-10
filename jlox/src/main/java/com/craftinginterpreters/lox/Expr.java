@@ -4,6 +4,8 @@
  */
 package com.craftinginterpreters.lox;
 
+import java.util.List;
+
 /**
  *
  * @author sharon
@@ -46,6 +48,30 @@ abstract class Expr {
         Expr right;
 
         public Logical() {
+        }
+    }
+
+    static class Call extends Expr {
+        final Expr callee;
+        final List<Expr> arguments;
+        Token paren;
+
+        Call(Expr callee, List<Expr> arguments) {
+            this.callee = callee;
+            this.arguments = arguments;
+        }
+
+        Call(Expr callee, Token paren, List<Expr> arguments) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        Call(Expr callee, List<Expr> arguments, Token paren) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         }
     }
 
