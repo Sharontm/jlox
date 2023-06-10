@@ -39,6 +39,16 @@ abstract class Expr {
         }
     }
 
+    static class Logical {
+
+        Expr left;
+        Object operator;
+        Expr right;
+
+        public Logical() {
+        }
+    }
+
     interface Visitor<R> {
        R visitBinaryExpr(Binary expr);
        R visitGroupingExpr(Grouping expr);

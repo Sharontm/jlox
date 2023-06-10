@@ -24,6 +24,7 @@ com/craftinginterpreters/lox/Stmt$Return.class
 com/craftinginterpreters/lox/Token.class
 com/craftinginterpreters/lox/Expr$Unary.class
 com/craftinginterpreters/lox/Stmt$If.class
+com/craftinginterpreters/lox/Expr$Logical.class
 com/craftinginterpreters/lox/Stmt$Block.class
 com/craftinginterpreters/lox/Lox.class
 com/craftinginterpreters/lox/Stmt$Print.class
