@@ -10,6 +10,8 @@ package com.craftinginterpreters.lox;
  */
 class Token 
 {
+
+    static Token OR;
   final TokenType type;
   final String lexeme;
   final Object literal;

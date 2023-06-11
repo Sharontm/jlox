@@ -52,7 +52,12 @@ public class Lox {
 
         // Stop if there was a syntax error.
         if (hadError) return;
-        Resolver resolver = new Resolver(interpreter);
+        Resolver resolver = new Resolver(interpreter) {
+            @Override
+            public Void visitSuperExpr(Expr.Super expr) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        };
         resolver.resolve(statements);
         
         // Stop if there was a resolution error.

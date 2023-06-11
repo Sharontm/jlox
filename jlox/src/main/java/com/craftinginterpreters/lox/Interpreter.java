@@ -48,17 +48,46 @@ class Interpreter implements Expr.Visitor<Object>,
     public Object visitLiteralExpr(Expr.Literal expr) {
         return expr.value;
     }
+    @Override
     public Object visitLogicalExpr(Expr.Logical expr) {
     Object left = evaluate(expr.left);
 
-    if (expr.operator == TokenType.OR) {
+    if (expr.operator == Token.OR) {
         if (isTruthy(left)) return left;
     } else {
         if (!isTruthy(left)) return left;
     }
 
     return evaluate(expr.right);
-}
+    }
+    @Override
+  public Object visitSetExpr(Expr.Set expr) {
+    Object object = evaluate((Expr) expr.object);
+
+    if (!(object instanceof LoxInstance)) { 
+      throw new RuntimeError(expr.name,
+                             "Only instances have fields.");
+    }
+
+    Object value = evaluate((Expr) expr.value);
+    ((LoxInstance)object).set(expr.name, value);
+    return value;
+  }
+    @Override
+    public Object visitThisExpr(Expr.This expr) {
+        return lookUpVariable(expr.keyword);
+    }
+
+    private Object lookUpVariable(Token name) {
+        if (locals.containsKey(name)) {
+            int distance = locals.get(name);
+            return environment.getAt(distance, name.lexeme);
+        } else {
+            return globals.get(name);
+        }
+    }
+
+
 
     @Override
     public Object visitUnaryExpr(Expr.Unary expr) {
@@ -75,6 +104,7 @@ class Interpreter implements Expr.Visitor<Object>,
         // Unreachable.
         return null;
     }
+    @Override
     public Object visitVariableExpr(Expr.Variable expr) {
         return lookUpVariable(expr.name, expr);
     }
@@ -155,6 +185,20 @@ class Interpreter implements Expr.Visitor<Object>,
         executeBlock(stmt.statements, new Environment(environment));
     return null;
   }
+    @Override
+  public Void visitClassStmt(Stmt.Class stmt) {
+    environment.define(stmt.name.lexeme, null);
+    Map<String, LoxFunction> methods = new HashMap<>();
+    for (Stmt.Function method : stmt.methods) {
+      LoxFunction function = new LoxFunction(method, environment,
+          method.name.lexeme.equals("init"));
+      methods.put(method.name.lexeme, function);
+    }
+
+    LoxClass klass = new LoxClass(stmt.name.lexeme, methods);
+    environment.assign(stmt.name, klass);
+    return null;
+  }
 
     @Override
     public Void visitExpressionStmt(Stmt.Expression stmt) {
@@ -163,7 +207,8 @@ class Interpreter implements Expr.Visitor<Object>,
     }
     @Override
     public Void visitFunctionStmt(Stmt.Function stmt) {
-      LoxFunction function = new LoxFunction(stmt, environment);
+      LoxFunction function = new LoxFunction(stmt, environment,
+                                           false);
       environment.define(stmt.name.lexeme, function);
       return null;
     }
@@ -264,6 +309,7 @@ class Interpreter implements Expr.Visitor<Object>,
         // Unreachable.
         return null;
     }
+    @Override
     public Object visitCallExpr(Expr.Call expr) {
       Object callee = evaluate(expr.callee);
 
@@ -285,15 +331,20 @@ class Interpreter implements Expr.Visitor<Object>,
 
       return function.call(this, arguments);
     }
-
-
     @Override
-    public Void visitBreakStmt(Stmt.Break stmt) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Object visitGetExpr(Expr.Get expr) {
+    Object object = evaluate((Expr) expr.object);
+    if (object instanceof LoxInstance) {
+      return ((LoxInstance) object).get(expr.name);
     }
 
+    throw new RuntimeError(expr.name,
+        "Only instances have properties.");
+  }
+
+
     @Override
-    public Void visitClassStmt(Stmt.Class stmt) {
+    public Object visitSuperExpr(Expr.Super expr) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
