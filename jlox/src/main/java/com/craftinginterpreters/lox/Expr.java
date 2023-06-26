@@ -65,10 +65,6 @@ abstract class Expr {
       this.arguments = arguments;
     }
 
-        Call(Expr callee, List<Expr> arguments, Token paren) {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
     @Override
     <R> R accept(Visitor<R> visitor) {
       return visitor.visitCallExpr(this);
