@@ -219,7 +219,7 @@ abstract class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
   public Void visitCallExpr(Expr.Call expr) {
     resolve(expr.callee);
 
-    for (Expr argument : expr.arguments) {
+    for (Expr argument : expr.arguements) {
       resolve(argument);
     }
 

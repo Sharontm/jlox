@@ -345,7 +345,7 @@ class Interpreter implements Expr.Visitor<Object>,
       Object callee = evaluate(expr.callee);
 
       List<Object> arguments = new ArrayList<>();
-      for (Expr argument : expr.arguments) { 
+      for (Expr argument : expr.arguements) { 
         arguments.add(evaluate(argument));
       }
       if (!(callee instanceof LoxCallable)) {
@@ -372,4 +372,14 @@ class Interpreter implements Expr.Visitor<Object>,
     throw new RuntimeError(expr.name,
         "Only instances have properties.");
   }
+
+    @Override
+    public Object visitCommaExpr(Expr.Comma expr) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Void visitBreakStmt(Stmt.Break stmt) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
