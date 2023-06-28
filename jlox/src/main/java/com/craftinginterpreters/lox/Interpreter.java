@@ -25,8 +25,7 @@ class Interpreter implements Expr.Visitor<Object>,
           public int arity() { return 0; }
 
           @Override
-          public Object call(Interpreter interpreter,
-                             List<Object> arguments) {
+          public Object call(Interpreter interpreter, List<Object> arguments) {
             return (double)System.currentTimeMillis() / 1000.0;
           }
 
@@ -90,19 +89,8 @@ class Interpreter implements Expr.Visitor<Object>,
 
     @Override
     public Object visitThisExpr(Expr.This expr) {
-        return lookUpVariable(expr.keyword);
+        return lookUpVariable(expr.keyword, expr);
     }
-
-    private Object lookUpVariable(Token name) {
-        if (locals.containsKey(name)) {
-            int distance = locals.get(name);
-            return environment.getAt(distance, name.lexeme);
-        } else {
-            return globals.get(name);
-        }
-    }
-
-
 
     @Override
     public Object visitUnaryExpr(Expr.Unary expr) {

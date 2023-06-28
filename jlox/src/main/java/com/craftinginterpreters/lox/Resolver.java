@@ -22,18 +22,6 @@ abstract class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     this.interpreter = interpreter;
   }
 
-    private Object lookUpVariable(int keyword, Expr.This expr) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void resolveLocal(Expr.This expr, int keyword) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private Object lookUpVariable(Token keyword, Expr.This expr) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     private static class ClassType {
 
         private static boolean NONE;
@@ -106,6 +94,7 @@ abstract class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
       }
     }
   }
+
   @Override
   public Void visitBlockStmt(Stmt.Block stmt) {
     beginScope();

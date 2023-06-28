@@ -53,14 +53,10 @@ abstract class Expr {
     }
 
     static class Call extends Expr {
-        Call (Expr callee, List<Expr> arguements, Token paren, Object par3) {
+        Call (Expr callee, Token paren, List<Expr> arguements) {
             this.callee = callee;
             this.paren = paren;
             this.arguements = arguements;
-        }
-
-        Call(Expr callee, List<Expr> arguments, Token paren) {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         }
 
         @Override
